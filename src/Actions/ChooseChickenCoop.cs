@@ -11,10 +11,16 @@ namespace Trestlebridge.Actions
         public static void CollectInput(Farm farm, Chicken animal)
         {
             Console.Clear();
-
+            
             for (int i = 0; i < farm.ChickenCoop.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. Chicken Coop (current stock: {farm.ChickenCoop[i].CurrentStock()})");
+                if ((farm.ChickenCoop[i].Capacity - 1) >= 
+                farm.ChickenCoop[i].CurrentStock()) 
+                {
+                    Console.WriteLine($"{i + 1}. Chicken Coop (Current Stock: {farm.ChickenCoop[i].CurrentStock()})");
+
+                    farm.ChickenCoop[i].ShowAnimalsByType();
+                }
             }
 
             Console.WriteLine();

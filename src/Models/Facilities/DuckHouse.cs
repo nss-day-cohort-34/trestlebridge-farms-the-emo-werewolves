@@ -3,12 +3,12 @@ using System.Text;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models.Animals;
-
+using System.Linq;
 
 namespace Trestlebridge.Models.Facilities {
     public class DuckHouse : IFacility<Duck>
     {
-        private int _capacity = 50;
+        private int _capacity = 12;
         private Guid _id = Guid.NewGuid();
 
         private List<Duck> _animals = new List<Duck>();
@@ -34,6 +34,14 @@ namespace Trestlebridge.Models.Facilities {
         public int CurrentStock(){
             return _animals.Count;
         }
+
+        public void ShowAnimalsByType(){
+            if (_animals.Count !=  0)
+            {
+                Console.WriteLine($"Duck: {_animals.Count()}");
+            }
+        }
+        
 
         public override string ToString()
         {

@@ -5,12 +5,12 @@ using Trestlebridge.Interfaces;
 using System.Linq;
 
 namespace Trestlebridge.Models.Facilities {
-    public class GrazingField : IFacility<IGrazing>
+    public class PlowedField : IFacility<IPlowed>
     {
         private int _capacity = 20;
         private Guid _id = Guid.NewGuid();
 
-        private List<IGrazing> _animals = new List<IGrazing>();
+        private List<IPlowed> _plants = new List<IPlowed>();
 
         public double Capacity {
             get {
@@ -18,37 +18,37 @@ namespace Trestlebridge.Models.Facilities {
             }
         }
 
-        public void AddResource (IGrazing animal)
+        public void AddResource (IPlowed plant)
         {
-            _animals.Add(animal);
+            _plants.Add(plant);
         }
 
-        public void AddResource (List<IGrazing> animals) 
+        public void AddResource (List<IPlowed> plants) 
         {
-            foreach (IGrazing animal in animals)
+            foreach (IPlowed plant in plants)
             {
-                _animals.Add(animal);
+                _plants.Add(plant);
             }
         }
 
         public int CurrentStock(){
-            return _animals.Count;
+            return _plants.Count;
         }
  
-        public void ShowAnimalsByType(){
-            var animalTypes = _animals
-            .GroupBy(animal => animal.Type)
+        public void ShowPlantByType(){
+            var plantTypes = _plants
+            .GroupBy(plant => plant.Type)
             .Select(group => 
             {
                 return new
                 {
-                    AnimalType = group.Key,
-                    AnimalCount = group.Count()
+                    PlantType = group.Key,
+                    PlantCount = group.Count()
                 };
             });
-            foreach (var animal in animalTypes)
+            foreach (var plant in plantTypes)
             {
-                Console.WriteLine($"{animal.AnimalType}: {animal.AnimalCount}");
+                Console.WriteLine($"{plant.PlantType}: {plant.PlantCount}");
             }
         }
 
@@ -57,8 +57,8 @@ namespace Trestlebridge.Models.Facilities {
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Grazing field {shortId} has {this._animals.Count} animals\n");
-            this._animals.ForEach(a => output.Append($"   {a}\n"));
+            output.Append($"Plowed field {shortId} has {this._plants.Count} plants\n");
+            this._plants.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();
         }
