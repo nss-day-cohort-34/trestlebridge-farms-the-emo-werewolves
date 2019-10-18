@@ -3,7 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models.Animals;
-
+using System.Linq;
 
 namespace Trestlebridge.Models.Facilities {
     public class ChickenCoop : IFacility<Chicken>
@@ -33,6 +33,13 @@ namespace Trestlebridge.Models.Facilities {
         }
         public int CurrentStock(){
             return _animals.Count;
+        }
+
+        public void ShowAnimalsByType(){
+            if (_animals.Count !=  0)
+            {
+                Console.WriteLine($"Chicken: {_animals.Count()}");
+            }
         }
 
         public override string ToString()

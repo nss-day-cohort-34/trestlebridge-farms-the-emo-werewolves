@@ -2,7 +2,7 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using Trestlebridge.Interfaces;
-
+using System.Linq;
 
 namespace Trestlebridge.Models.Facilities {
     public class GrazingField : IFacility<IGrazing>
@@ -36,7 +36,20 @@ namespace Trestlebridge.Models.Facilities {
         }
  
         public void ShowAnimalsByType(){
-            
+            var animalTypes = _animals
+            .GroupBy(animal => animal.Type)
+            .Select(group => 
+            {
+                return new
+                {
+                    AnimalType = group.Key,
+                    AnimalCount = group.Count()
+                };
+            });
+            foreach (var animal in animalTypes)
+            {
+                Console.WriteLine($"{animal.AnimalType}: {animal.AnimalCount}");
+            }
         }
 
         public override string ToString()

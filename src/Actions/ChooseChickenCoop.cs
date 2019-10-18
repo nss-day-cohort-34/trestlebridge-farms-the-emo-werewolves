@@ -18,7 +18,8 @@ namespace Trestlebridge.Actions
                 farm.ChickenCoop[i].CurrentStock()) 
                 {
                     Console.WriteLine($"{i + 1}. Chicken Coop (Current Stock: {farm.ChickenCoop[i].CurrentStock()})");
-
+                    
+                    farm.ChickenCoop[i].ShowAnimalsByType();
                 }
             }
 

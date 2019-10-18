@@ -18,6 +18,8 @@ namespace Trestlebridge.Actions
                 farm.DuckHouse[i].CurrentStock()) 
                 {
                     Console.WriteLine($"{i + 1}. Duck House (Current Stock: {farm.DuckHouse[i].CurrentStock()})");
+
+                    farm.DuckHouse[i].ShowAnimalsByType();
                 }
             }
 

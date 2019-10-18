@@ -18,8 +18,8 @@ namespace Trestlebridge.Actions
                 farm.GrazingFields[i].CurrentStock()) 
                 {
                     Console.WriteLine($"{i + 1}. Grazing Field (Current Stock: {farm.GrazingFields[i].CurrentStock()})");
-                    
-                    Console.WriteLine($"{farm.GrazingFields[i].CurrentStock()}");
+
+                    farm.GrazingFields[i].ShowAnimalsByType();
                 }
             }
 
