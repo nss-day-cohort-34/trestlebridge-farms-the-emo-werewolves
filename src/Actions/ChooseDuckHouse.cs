@@ -14,7 +14,11 @@ namespace Trestlebridge.Actions
 
             for (int i = 0; i < farm.DuckHouse.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. Duck House (current stock: {farm.DuckHouse[i].CurrentStock()})");
+                if ((farm.DuckHouse[i].Capacity - 1) >= 
+                farm.DuckHouse[i].CurrentStock()) 
+                {
+                    Console.WriteLine($"{i + 1}. Duck House (Current Stock: {farm.DuckHouse[i].CurrentStock()})");
+                }
             }
 
             Console.WriteLine();
