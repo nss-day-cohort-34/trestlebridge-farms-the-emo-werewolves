@@ -31,6 +31,10 @@ namespace Trestlebridge.Models.Facilities {
             }
         }
 
+        public int CurrentStock(){
+            return _animals.Count;
+        }
+
         public override string ToString()
         {
             StringBuilder output = new StringBuilder();

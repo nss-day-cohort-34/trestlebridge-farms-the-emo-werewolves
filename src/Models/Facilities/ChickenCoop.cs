@@ -31,6 +31,9 @@ namespace Trestlebridge.Models.Facilities {
                 _animals.Add(animal);
             }
         }
+        public int CurrentStock(){
+            return _animals.Count;
+        }
 
         public override string ToString()
         {
