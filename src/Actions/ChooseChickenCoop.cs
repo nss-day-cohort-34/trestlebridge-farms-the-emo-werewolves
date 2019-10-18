@@ -6,15 +6,15 @@ using Trestlebridge.Models.Animals;
 
 namespace Trestlebridge.Actions
 {
-    public class ChooseGrazingField
+    public class ChooseChickenCoop
     {
-        public static void CollectInput(Farm farm, IGrazing animal)
+        public static void CollectInput(Farm farm, Chicken animal)
         {
             Console.Clear();
 
-            for (int i = 0; i < farm.GrazingFields.Count; i++)
+            for (int i = 0; i < farm.ChickenCoop.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. Grazing Field (current stock: {farm.GrazingFields[i].CurrentStock()})");
+                Console.WriteLine($"{i + 1}. Chicken Coop (current stock: {farm.ChickenCoop[i].CurrentStock()})");
             }
 
             Console.WriteLine();
@@ -25,17 +25,17 @@ namespace Trestlebridge.Actions
             Console.Write("> ");
             int choice = Int32.Parse(Console.ReadLine());
 
-            if (animal is IGrazing)
+            if (animal is Chicken)
             {
-                farm.GrazingFields[choice - 1].AddResource(animal);
+                farm.ChickenCoop[choice - 1].AddResource(animal);
             }
             else
             {
                 // Console.Clear();
                 Console.WriteLine("Please select another facility");
-                for (int i = 0; i < farm.GrazingFields.Count; i++)
+                for (int i = 0; i < farm.ChickenCoop.Count; i++)
                 {
-                    Console.WriteLine($"{i + 1}. Grazing Field");
+                    Console.WriteLine($"{i + 1}. Chicken Coop");
                 }
             }
 
