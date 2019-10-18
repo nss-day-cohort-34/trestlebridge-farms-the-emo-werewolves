@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models.Facilities;
 
@@ -30,6 +31,8 @@ namespace Trestlebridge.Models
         public void AddGrazingField (GrazingField field)
         {
             GrazingFields.Add(field);
+            Console.WriteLine("You have added a Grazing Field!");
+            Thread.Sleep(2000);
         }
 
         public override string ToString()
