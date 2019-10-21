@@ -41,7 +41,6 @@ namespace Trestlebridge.Actions
 
             if (plantFieldDictionary.Count > 0)
             {
-
                 Console.WriteLine($"Place the plant where?");
 
                 Console.Write("> ");
@@ -63,10 +62,6 @@ namespace Trestlebridge.Actions
                 else
                 {
                     Console.WriteLine("Please select another facility");
-                    for (int i = 0; i < farm.PlowedFields.Count; i++)
-                    {
-                        Console.WriteLine($"{i + 1}. Plowed Field");
-                    }
                 }
             }
             else
