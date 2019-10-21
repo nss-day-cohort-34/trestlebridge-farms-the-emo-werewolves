@@ -6,9 +6,9 @@ using Trestlebridge.Models;
 
 namespace Trestlebridge.Actions
 {
-    public class ChoosePlowedField
+    public class ChooseSunflowerField<TPlantType> where TPlantType : IPlowed, INatural
     {
-        public static void CollectInput(Farm farm, IPlowed plant)
+        public static void CollectInput(Farm farm, TPlantType plant)
         {
             Console.Clear();
 
@@ -24,24 +24,42 @@ namespace Trestlebridge.Actions
                     farm.PlowedFields[i].ShowPlantsByType();
                 }
             }
+            List<IFacility<INatural>> openNaturalFields = new List<IFacility<INatural>>();
+            for (int i = 0; i < farm.NaturalFields.Count; i++)
+            {
+                if ((farm.NaturalFields[i].Capacity - 1) >=
+                farm.NaturalFields[i].CurrentStock())
+                {
+                    openNaturalFields.Add(farm.NaturalFields[i]);
+                    Console.WriteLine($"{i + farm.PlowedFields.Count + 1}. Natural Field (Current Stock: {farm.NaturalFields[i].CurrentStock()})");
 
+                    farm.NaturalFields[i].ShowPlantsByType();
+                }
+            }
+            
             Console.WriteLine();
 
-            if (openPlowedFields.Count > 0)
+            if (openPlowedFields.Count > 0 || openNaturalFields.Count > 0)
             {
 
                 Console.WriteLine($"Place the plant where?");
 
                 Console.Write("> ");
                 int choice = Int32.Parse(Console.ReadLine());
-
+                
+                // If statement below needs to match the number of the user's choice with the type of field because the plant will always be both IPlowed and INatural
                 if (plant is IPlowed)
                 {
                     farm.PlowedFields[choice - 1].AddResource(plant);
                 }
+                else if (plant is INatural)
+                {
+                    Console.WriteLine($"Choice: {choice}");
+                    Console.WriteLine(farm.PlowedFields.Count);
+                    farm.NaturalFields[choice - farm.PlowedFields.Count - 1].AddResource(plant);
+                }
                 else
                 {
-                    // Console.Clear();
                     Console.WriteLine("Please select another facility");
                     for (int i = 0; i < farm.PlowedFields.Count; i++)
                     {
