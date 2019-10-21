@@ -1,53 +1,51 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
-using Trestlebridge.Models.Animals;
-using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Actions
 {
-    public class ChooseChickenCoop
+    public class ChoosePlowedField
     {
-        public static void CollectInput(Farm farm, Chicken animal)
+        public static void CollectInput(Farm farm, IPlowed plant)
         {
             Console.Clear();
 
-            List<ChickenCoop> openChickenCoops = new List<ChickenCoop>();
-
-            for (int i = 0; i < farm.ChickenCoop.Count; i++)
+            List<IFacility<IPlowed>> openPlowedFields = new List<IFacility<IPlowed>>();
+            for (int i = 0; i < farm.PlowedFields.Count; i++)
             {
-                if ((farm.ChickenCoop[i].Capacity - 1) >=
-                farm.ChickenCoop[i].CurrentStock())
+                if ((farm.PlowedFields[i].Capacity - 1) >=
+                farm.PlowedFields[i].CurrentStock())
                 {
-                    openChickenCoops.Add(farm.ChickenCoop[i]);
-                    Console.WriteLine($"{i + 1}. Chicken Coop (Current Stock: {farm.ChickenCoop[i].CurrentStock()})");
+                    openPlowedFields.Add(farm.PlowedFields[i]);
+                    Console.WriteLine($"{i + 1}. Plowed Field (Current Stock: {farm.PlowedFields[i].CurrentStock()})");
 
-                    farm.ChickenCoop[i].ShowAnimalsByType();
+                    farm.PlowedFields[i].ShowPlantsByType();
                 }
             }
 
             Console.WriteLine();
 
-            if (openChickenCoops.Count > 0)
+            if (openPlowedFields.Count > 0)
             {
 
-                Console.WriteLine($"Place the animal where?");
+                Console.WriteLine($"Place the plant where?");
 
                 Console.Write("> ");
                 int choice = Int32.Parse(Console.ReadLine());
 
-                if (animal is Chicken)
+                if (plant is IPlowed)
                 {
-                    farm.ChickenCoop[choice - 1].AddResource(animal);
+                    farm.PlowedFields[choice - 1].AddResource(plant);
                 }
                 else
                 {
                     // Console.Clear();
                     Console.WriteLine("Please select another facility");
-                    for (int i = 0; i < farm.ChickenCoop.Count; i++)
+                    for (int i = 0; i < farm.PlowedFields.Count; i++)
                     {
-                        Console.WriteLine($"{i + 1}. Chicken Coop");
+                        Console.WriteLine($"{i + 1}. Plowed Field");
                     }
                 }
             }

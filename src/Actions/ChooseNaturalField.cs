@@ -1,53 +1,51 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
-using Trestlebridge.Models.Animals;
-using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Actions
 {
-    public class ChooseChickenCoop
+    public class ChooseNaturalField
     {
-        public static void CollectInput(Farm farm, Chicken animal)
+        public static void CollectInput(Farm farm, INatural plant)
         {
             Console.Clear();
 
-            List<ChickenCoop> openChickenCoops = new List<ChickenCoop>();
-
-            for (int i = 0; i < farm.ChickenCoop.Count; i++)
+            List<IFacility<INatural>> openNaturalFields = new List<IFacility<INatural>>();
+            for (int i = 0; i < farm.NaturalFields.Count; i++)
             {
-                if ((farm.ChickenCoop[i].Capacity - 1) >=
-                farm.ChickenCoop[i].CurrentStock())
+                if ((farm.NaturalFields[i].Capacity - 1) >=
+                farm.NaturalFields[i].CurrentStock())
                 {
-                    openChickenCoops.Add(farm.ChickenCoop[i]);
-                    Console.WriteLine($"{i + 1}. Chicken Coop (Current Stock: {farm.ChickenCoop[i].CurrentStock()})");
+                    openNaturalFields.Add(farm.NaturalFields[i]);
+                    Console.WriteLine($"{i + 1}. Natural Field (Current Stock: {farm.NaturalFields[i].CurrentStock()})");
 
-                    farm.ChickenCoop[i].ShowAnimalsByType();
+                    farm.NaturalFields[i].ShowPlantsByType();
                 }
             }
 
             Console.WriteLine();
 
-            if (openChickenCoops.Count > 0)
+            if (openNaturalFields.Count > 0)
             {
 
-                Console.WriteLine($"Place the animal where?");
+                Console.WriteLine($"Place the plant where?");
 
                 Console.Write("> ");
                 int choice = Int32.Parse(Console.ReadLine());
 
-                if (animal is Chicken)
+                if (plant is INatural)
                 {
-                    farm.ChickenCoop[choice - 1].AddResource(animal);
+                    farm.NaturalFields[choice - 1].AddResource(plant);
                 }
                 else
                 {
                     // Console.Clear();
                     Console.WriteLine("Please select another facility");
-                    for (int i = 0; i < farm.ChickenCoop.Count; i++)
+                    for (int i = 0; i < farm.NaturalFields.Count; i++)
                     {
-                        Console.WriteLine($"{i + 1}. Chicken Coop");
+                        Console.WriteLine($"{i + 1}. Natural Field");
                     }
                 }
             }

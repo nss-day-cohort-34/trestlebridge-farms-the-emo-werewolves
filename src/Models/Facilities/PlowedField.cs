@@ -4,26 +4,33 @@ using System.Collections.Generic;
 using Trestlebridge.Interfaces;
 using System.Linq;
 
-namespace Trestlebridge.Models.Facilities {
-    public class PlowedField : IFacility<IPlowed>
+namespace Trestlebridge.Models.Facilities
+{
+    public class PlowedField : IFacility<IPlowed>, IPlantField
     {
-        private int _capacity = 20;
+
+        //13 rows of plants. 5 plants per row
+        private int _capacity = 65;
         private Guid _id = Guid.NewGuid();
 
         private List<IPlowed> _plants = new List<IPlowed>();
 
-        public double Capacity {
-            get {
+        public double Capacity
+        {
+            get
+            {
                 return _capacity;
             }
         }
 
-        public void AddResource (IPlowed plant)
+        public string Type { get; } = "Plowed Field";
+
+        public void AddResource(IPlowed plant)
         {
             _plants.Add(plant);
         }
 
-        public void AddResource (List<IPlowed> plants) 
+        public void AddResource(List<IPlowed> plants)
         {
             foreach (IPlowed plant in plants)
             {
@@ -31,19 +38,21 @@ namespace Trestlebridge.Models.Facilities {
             }
         }
 
-        public int CurrentStock(){
-            return _plants.Count;
+        public int CurrentStock()
+        {
+            return _plants.Count * 5;
         }
- 
-        public void ShowPlantByType(){
+
+        public void ShowPlantsByType()
+        {
             var plantTypes = _plants
             .GroupBy(plant => plant.Type)
-            .Select(group => 
+            .Select(group =>
             {
                 return new
                 {
                     PlantType = group.Key,
-                    PlantCount = group.Count()
+                    PlantCount = group.Count() * 5
                 };
             });
             foreach (var plant in plantTypes)
@@ -57,7 +66,7 @@ namespace Trestlebridge.Models.Facilities {
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Plowed field {shortId} has {this._plants.Count} plants\n");
+            output.Append($"Plowed field {shortId} has {this._plants.Count} row(s) of 5 plants\n");
             this._plants.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();

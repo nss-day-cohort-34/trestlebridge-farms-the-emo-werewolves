@@ -5,9 +5,10 @@ using Trestlebridge.Interfaces;
 using System.Linq;
 
 namespace Trestlebridge.Models.Facilities {
-    public class NaturalField : IFacility<INatural>
+    public class NaturalField : IFacility<INatural>, IPlantField
     {
-        private int _capacity = 20;
+        // 10 rows of plants. 6 plants per row
+        private int _capacity = 60;
         private Guid _id = Guid.NewGuid();
 
         private List<INatural> _plants = new List<INatural>();
@@ -17,6 +18,8 @@ namespace Trestlebridge.Models.Facilities {
                 return _capacity;
             }
         }
+
+        public string Type { get; } = "Natural Field";
 
         public void AddResource (INatural plant)
         {
@@ -32,10 +35,10 @@ namespace Trestlebridge.Models.Facilities {
         }
 
         public int CurrentStock(){
-            return _plants.Count;
+            return _plants.Count * 6;
         }
  
-        public void ShowPlantByType(){
+        public void ShowPlantsByType(){
             var plantTypes = _plants
             .GroupBy(plant => plant.Type)
             .Select(group => 
@@ -43,7 +46,7 @@ namespace Trestlebridge.Models.Facilities {
                 return new
                 {
                     PlantType = group.Key,
-                    PlantCount = group.Count()
+                    PlantCount = group.Count() * 6
                 };
             });
             foreach (var plant in plantTypes)
@@ -57,7 +60,7 @@ namespace Trestlebridge.Models.Facilities {
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Natural field {shortId} has {this._plants.Count} plants\n");
+            output.Append($"Natural field {shortId} has {this._plants.Count} row(s) of 6 plants\n");
             this._plants.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();

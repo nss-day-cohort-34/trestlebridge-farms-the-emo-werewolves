@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Trestlebridge.Actions;
 using Trestlebridge.Models;
 
@@ -49,7 +50,12 @@ namespace Trestlebridge
                 else if (option == "2")
                 {
                     DisplayBanner();
-                    PurchaseStock.CollectInput(Trestlebridge);
+                    PurchaseLivestock.CollectInput(Trestlebridge);
+                }
+                else if (option == "3")
+                {
+                    DisplayBanner();
+                    PurchaseSeed.CollectInput(Trestlebridge);
                 }
                 else if (option == "4")
                 {
@@ -66,7 +72,8 @@ namespace Trestlebridge
                 }
                 else
                 {
-                    Console.WriteLine($"Invalid option: {option}");
+                    Console.WriteLine($"Invalid option: {option}. Please try again.");
+                    Thread.Sleep(1000);
                 }
             }
         }
