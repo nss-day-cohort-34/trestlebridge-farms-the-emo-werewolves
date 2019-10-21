@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using Trestlebridge.Actions;
 using Trestlebridge.Models;
 
@@ -66,7 +67,8 @@ namespace Trestlebridge
                 }
                 else
                 {
-                    Console.WriteLine($"Invalid option: {option}");
+                    Console.WriteLine($"Invalid option: {option}. Please try again.");
+                    Thread.Sleep(1000);
                 }
             }
         }

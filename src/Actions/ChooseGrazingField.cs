@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
 using Trestlebridge.Models.Animals;
@@ -12,11 +14,14 @@ namespace Trestlebridge.Actions
         {
             Console.Clear();
 
+            List<IFacility<IGrazing>> openFields = new List<IFacility<IGrazing>>();
+
             for (int i = 0; i < farm.GrazingFields.Count; i++)
             {
-                if ((farm.GrazingFields[i].Capacity - 1) >= 
-                farm.GrazingFields[i].CurrentStock()) 
+                if ((farm.GrazingFields[i].Capacity - 1) >=
+                farm.GrazingFields[i].CurrentStock())
                 {
+                    openFields.Add(farm.GrazingFields[i]);
                     Console.WriteLine($"{i + 1}. Grazing Field (Current Stock: {farm.GrazingFields[i].CurrentStock()})");
 
                     farm.GrazingFields[i].ShowAnimalsByType();
@@ -25,25 +30,31 @@ namespace Trestlebridge.Actions
 
             Console.WriteLine();
 
-            // How can I output the type of animal chosen here?
-            Console.WriteLine($"Place the animal where?");
-
-            Console.Write("> ");
-            int choice = Int32.Parse(Console.ReadLine());
-
-            if (animal is IGrazing)
+            if (openFields.Count > 0)
             {
-                farm.GrazingFields[choice - 1].AddResource(animal);
+                Console.WriteLine($"Place the animal where?");
+                Console.Write("> ");
+                int choice = Int32.Parse(Console.ReadLine());
+
+                if (animal is IGrazing)
+                {
+                    farm.GrazingFields[choice - 1].AddResource(animal);
+                }
+                else
+                {
+                    Console.WriteLine("Please select another facility");
+                    for (int i = 0; i < farm.GrazingFields.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. Grazing Field");
+                    }
+                }
             }
             else
             {
-                // Console.Clear();
-                Console.WriteLine("Please select another facility");
-                for (int i = 0; i < farm.GrazingFields.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. Grazing Field");
-                }
+                Console.WriteLine("There are no matching facilities available. Please create one first.");
+                Thread.Sleep(2000);
             }
+
 
             /*
                 Couldn't get this to work. Can you?
