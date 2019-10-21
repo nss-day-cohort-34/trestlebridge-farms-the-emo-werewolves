@@ -24,12 +24,10 @@ namespace Trestlebridge.Actions
                 case 1:
                     ChoosePlowedField.CollectInput(farm, new Sesame());
                     break;
-                // case 2:
-                //     ChooseGrazingField.CollectInput(farm, new Cow());
-                //     break;
-                // case 3:
-                //     ChooseDuckHouse.CollectInput(farm, new Duck());
-                //     break;
+                case 3:
+                    ChooseNaturalField.CollectInput(farm, new Wildflower());
+                    break;
+
                 default:
                     break;
             }

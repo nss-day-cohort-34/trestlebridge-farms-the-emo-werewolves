@@ -9,7 +9,7 @@ namespace Trestlebridge.Models.Facilities {
     {
         
         //13 rows of plants. 5 plants per row
-        private int _capacity = 10;
+        private int _capacity = 65;
         private Guid _id = Guid.NewGuid();
 
         private List<IPlowed> _plants = new List<IPlowed>();
