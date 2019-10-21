@@ -50,7 +50,12 @@ namespace Trestlebridge
                 else if (option == "2")
                 {
                     DisplayBanner();
-                    PurchaseStock.CollectInput(Trestlebridge);
+                    PurchaseLivestock.CollectInput(Trestlebridge);
+                }
+                else if (option == "3")
+                {
+                    DisplayBanner();
+                    PurchaseSeed.CollectInput(Trestlebridge);
                 }
                 else if (option == "4")
                 {

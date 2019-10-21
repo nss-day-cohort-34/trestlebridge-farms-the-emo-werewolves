@@ -3,14 +3,14 @@ using Trestlebridge.Interfaces;
 
 namespace Trestlebridge.Models.Plants
 {
-    public class Sesame : IResource, ISeedProducing, IPlowed
+    public class Sunflower : IResource, ISeedProducing, IPlowed, INatural
     {
-        private int _seedsProduced = 520;
-        public string Type { get; } = "Sesame";
+        private int _seedsProduced = 40;
+        public string Type { get; } = "Sunflower";
 
         public void Grow()
         {
-            Console.WriteLine("The sesame plant grew!");
+            Console.WriteLine("The sunflower plant grew!");
         }
 
         public double Harvest () {
@@ -18,7 +18,7 @@ namespace Trestlebridge.Models.Plants
         }
 
         public override string ToString () {
-            return $"One row of sesame plants. Yum!";
+            return $"One row of sunflower plants. Yum!";
         }
     }
 }

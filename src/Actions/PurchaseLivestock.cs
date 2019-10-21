@@ -6,7 +6,7 @@ using Trestlebridge.Models.Facilities;
 
 namespace Trestlebridge.Actions
 {
-    public class PurchaseStock
+    public class PurchaseLivestock
     {
         public static void CollectInput(Farm farm)
         {

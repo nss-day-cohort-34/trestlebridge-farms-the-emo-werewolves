@@ -7,7 +7,9 @@ using System.Linq;
 namespace Trestlebridge.Models.Facilities {
     public class PlowedField : IFacility<IPlowed>
     {
-        private int _capacity = 20;
+        
+        //13 rows of plants. 5 plants per row
+        private int _capacity = 10;
         private Guid _id = Guid.NewGuid();
 
         private List<IPlowed> _plants = new List<IPlowed>();
@@ -32,10 +34,10 @@ namespace Trestlebridge.Models.Facilities {
         }
 
         public int CurrentStock(){
-            return _plants.Count;
+            return _plants.Count * 5;
         }
  
-        public void ShowPlantByType(){
+        public void ShowPlantsByType(){
             var plantTypes = _plants
             .GroupBy(plant => plant.Type)
             .Select(group => 
@@ -43,7 +45,7 @@ namespace Trestlebridge.Models.Facilities {
                 return new
                 {
                     PlantType = group.Key,
-                    PlantCount = group.Count()
+                    PlantCount = group.Count() * 5
                 };
             });
             foreach (var plant in plantTypes)
@@ -57,7 +59,7 @@ namespace Trestlebridge.Models.Facilities {
             StringBuilder output = new StringBuilder();
             string shortId = $"{this._id.ToString().Substring(this._id.ToString().Length - 6)}";
 
-            output.Append($"Plowed field {shortId} has {this._plants.Count} plants\n");
+            output.Append($"Plowed field {shortId} has {this._plants.Count} row(s) of 5 plants\n");
             this._plants.ForEach(a => output.Append($"   {a}\n"));
 
             return output.ToString();
