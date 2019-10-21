@@ -1,5 +1,4 @@
 using System;
-using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
 using Trestlebridge.Models.Plants;
 
@@ -30,7 +29,6 @@ namespace Trestlebridge.Actions
                 case 3:
                     ChooseNaturalField.CollectInput(farm, new Wildflower());
                     break;
-
                 default:
                     break;
             }

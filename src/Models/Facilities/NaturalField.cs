@@ -5,7 +5,7 @@ using Trestlebridge.Interfaces;
 using System.Linq;
 
 namespace Trestlebridge.Models.Facilities {
-    public class NaturalField : IFacility<INatural>
+    public class NaturalField : IFacility<INatural>, IPlantField
     {
         // 10 rows of plants. 6 plants per row
         private int _capacity = 60;
@@ -18,6 +18,8 @@ namespace Trestlebridge.Models.Facilities {
                 return _capacity;
             }
         }
+
+        public string Type { get; } = "Natural Field";
 
         public void AddResource (INatural plant)
         {
