@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
@@ -13,15 +14,18 @@ namespace Trestlebridge.Actions
             Console.Clear();
 
             List<IFacility<INatural>> openNaturalFields = new List<IFacility<INatural>>();
-            for (int i = 0; i < farm.NaturalFields.Count; i++)
-            {
-                if ((farm.NaturalFields[i].Capacity - 1) >=
-                farm.NaturalFields[i].CurrentStock())
-                {
-                    openNaturalFields.Add(farm.NaturalFields[i]);
-                    Console.WriteLine($"{i + 1}. Natural Field (Current Stock: {farm.NaturalFields[i].CurrentStock()})");
 
-                    farm.NaturalFields[i].ShowPlantsByType();
+            var sortedNaturalFields = farm.NaturalFields.Where(naturalField => (naturalField.Capacity - 1) >= naturalField.CurrentStock()).ToList();
+
+            for (int i = 0; i < sortedNaturalFields.Count; i++)
+            {
+                if ((sortedNaturalFields[i].Capacity - 1) >=
+                sortedNaturalFields[i].CurrentStock())
+                {
+                    openNaturalFields.Add(sortedNaturalFields[i]);
+                    Console.WriteLine($"{i + 1}. Natural Field (Current Stock: {sortedNaturalFields[i].CurrentStock()})");
+
+                    sortedNaturalFields[i].ShowPlantsByType();
                 }
             }
 
@@ -37,7 +41,7 @@ namespace Trestlebridge.Actions
 
                 if (plant is INatural)
                 {
-                    farm.NaturalFields[choice - 1].AddResource(plant);
+                    sortedNaturalFields[choice - 1].AddResource(plant);
                 }
                 else
                 {
