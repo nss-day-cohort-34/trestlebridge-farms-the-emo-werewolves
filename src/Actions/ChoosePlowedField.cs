@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
@@ -13,15 +14,18 @@ namespace Trestlebridge.Actions
             Console.Clear();
 
             List<IFacility<IPlowed>> openPlowedFields = new List<IFacility<IPlowed>>();
-            for (int i = 0; i < farm.PlowedFields.Count; i++)
-            {
-                if ((farm.PlowedFields[i].Capacity - 1) >=
-                farm.PlowedFields[i].CurrentStock())
-                {
-                    openPlowedFields.Add(farm.PlowedFields[i]);
-                    Console.WriteLine($"{i + 1}. Plowed Field (Current Stock: {farm.PlowedFields[i].CurrentStock()})");
 
-                    farm.PlowedFields[i].ShowPlantsByType();
+            var sortedPlowedFields = farm.PlowedFields.Where(plowedField => (plowedField.Capacity - 1) >= plowedField.CurrentStock()).ToList();
+
+            for (int i = 0; i < sortedPlowedFields.Count; i++)
+            {
+                if ((sortedPlowedFields[i].Capacity - 1) >=
+                sortedPlowedFields[i].CurrentStock())
+                {
+                    openPlowedFields.Add(sortedPlowedFields[i]);
+                    Console.WriteLine($"{i + 1}. Plowed Field (Current Stock: {sortedPlowedFields[i].CurrentStock()})");
+
+                    sortedPlowedFields[i].ShowPlantsByType();
                 }
             }
 
@@ -37,7 +41,7 @@ namespace Trestlebridge.Actions
 
                 if (plant is IPlowed)
                 {
-                    farm.PlowedFields[choice - 1].AddResource(plant);
+                    sortedPlowedFields[choice - 1].AddResource(plant);
                 }
                 else
                 {
