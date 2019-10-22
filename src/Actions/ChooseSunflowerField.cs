@@ -9,6 +9,18 @@ namespace Trestlebridge.Actions
 {
     public class ChooseSunflowerField<TPlantType> where TPlantType : IPlowed, INatural
     {
+        static void DisplayBanner()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine(@"
+        +-++-++-++-++-++-++-++-++-++-++-++-++-+
+        |T||r||e||s||t||l||e||b||r||i||d||g||e|
+        +-++-++-++-++-++-++-++-++-++-++-++-++-+
+                    |F||a||r||m||s|
+                    +-++-++-++-++-+");
+            Console.WriteLine();
+        }
         public static void CollectInput(Farm farm, TPlantType plant)
         {
             Console.Clear();
@@ -16,7 +28,6 @@ namespace Trestlebridge.Actions
             Dictionary<int, IPlantField> plantFieldDictionary = new Dictionary<int, IPlantField>();
 
             var sortedPlowedFields = farm.PlowedFields.Where(plowedField => (plowedField.Capacity - 1) >= plowedField.CurrentStock()).ToList();
-            
             var sortedNaturalFields = farm.NaturalFields.Where(naturalField => (naturalField.Capacity - 1) >= naturalField.CurrentStock()).ToList();
 
             for (int i = 0; i < sortedPlowedFields.Count; i++)
@@ -49,35 +60,75 @@ namespace Trestlebridge.Actions
                 Console.WriteLine($"Place the plant where?");
 
                 Console.Write("> ");
-                int choice = Int32.Parse(Console.ReadLine());
+                try
+                {
+                    int choice = Int32.Parse(Console.ReadLine());
+                    // Take user's choice and search for the dictionary key that matches the integer. Return the type of the chosen field. 
+                    string chosenField = plantFieldDictionary[choice].Type;
 
-                // Take user's choice and search for the dictionary key that matches the integer. Return the type of the chosen field. 
-                string chosenField = plantFieldDictionary[choice].Type;
+                    if (chosenField == "Plowed Field")
+                    {
+                        try
+                        {
+                            sortedPlowedFields[choice - 1].AddResource(plant);
+                        }
+                        catch (KeyNotFoundException)
+                        {
+                            Console.WriteLine("This facility does not exist. Please create a new plant and try again.");
+                            Thread.Sleep(2000);
+                            DisplayBanner();
+                            PurchaseSeed.CollectInput(farm);
+                        }
+                    }
+                    else if (chosenField == "Natural Field")
+                    {
+                        try
+                        {
+                            sortedNaturalFields[choice - sortedPlowedFields.Count - 1].AddResource(plant);
+                        }
+                        catch (KeyNotFoundException)
+                        {
+                            Console.WriteLine("This facility does not exist. Please create a new plant and try again.");
+                            Thread.Sleep(2000);
+                            DisplayBanner();
+                            PurchaseSeed.CollectInput(farm);
+                        }
+                    }
+                    else
+                    {
 
-                if (chosenField == "Plowed Field")
-                {
-                    sortedPlowedFields[choice - 1].AddResource(plant);
+                        Console.WriteLine("Please select another facility");
+                        Thread.Sleep(2000);
+                    }
                 }
-                else if (chosenField == "Natural Field")
+                catch (FormatException)
                 {
-                    sortedNaturalFields[choice - sortedPlowedFields.Count - 1].AddResource(plant);
+                    Console.WriteLine("Invalid option. Please create a new plant and try again.");
+                    Thread.Sleep(2000);
+                    DisplayBanner();
+                    PurchaseSeed.CollectInput(farm);
                 }
-                else
+                catch (KeyNotFoundException)
                 {
-                    Console.WriteLine("Please select another facility");
+                    Console.WriteLine("This facility does not exist. Please create a new plant and try again.");
+                    Thread.Sleep(2000);
+                    DisplayBanner();
+                    PurchaseSeed.CollectInput(farm);
                 }
+
             }
             else
             {
                 Console.WriteLine("There are no matching facilities available. Please create one first.");
                 Thread.Sleep(2000);
             }
-            /*
-                Couldn't get this to work. Can you?
-                Stretch goal. Only if the app is fully functional.
-             */
-            // farm.PurchaseResource<IGrazing>(animal, choice);
-
         }
+
+        /*
+            Couldn't get this to work. Can you?
+            Stretch goal. Only if the app is fully functional.
+         */
+        // farm.PurchaseResource<IGrazing>(animal, choice);
+
     }
 }
