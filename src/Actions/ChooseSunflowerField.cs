@@ -74,7 +74,7 @@ namespace Trestlebridge.Actions
                         }
                         catch (KeyNotFoundException)
                         {
-                            Console.WriteLine("This facility does not exist. Please create a new plant and try again.");
+                            Console.WriteLine("Invalid option. Please create a new plant and try again.");
                             Thread.Sleep(2000);
                             DisplayBanner();
                             PurchaseSeed.CollectInput(farm);
@@ -88,7 +88,7 @@ namespace Trestlebridge.Actions
                         }
                         catch (KeyNotFoundException)
                         {
-                            Console.WriteLine("This facility does not exist. Please create a new plant and try again.");
+                            Console.WriteLine("Invalid option. Please create a new plant and try again.");
                             Thread.Sleep(2000);
                             DisplayBanner();
                             PurchaseSeed.CollectInput(farm);
@@ -110,7 +110,7 @@ namespace Trestlebridge.Actions
                 }
                 catch (KeyNotFoundException)
                 {
-                    Console.WriteLine("This facility does not exist. Please create a new plant and try again.");
+                    Console.WriteLine("Invalid option. Please create a new plant and try again.");
                     Thread.Sleep(2000);
                     DisplayBanner();
                     PurchaseSeed.CollectInput(farm);

@@ -36,34 +36,43 @@ namespace Trestlebridge.Actions
             string choice = Console.ReadLine();
             try
             {
-
-                switch (Int32.Parse(choice))
+                if (int.Parse(choice) <= 7 && int.Parse(choice) >= 1)
                 {
-                    case 1:
-                        ChooseChickenCoop.CollectInput(farm, new Chicken());
-                        break;
-                    case 2:
-                        ChooseGrazingField.CollectInput(farm, new Cow());
-                        break;
-                    case 3:
-                        ChooseDuckHouse.CollectInput(farm, new Duck());
-                        break;
-                    case 4:
-                        ChooseGrazingField.CollectInput(farm, new Pig());
-                        break;
-                    case 5:
-                        ChooseGrazingField.CollectInput(farm, new Goat());
-                        break;
-                    case 6:
-                        ChooseGrazingField.CollectInput(farm, new Ostrich());
-                        break;
-                    case 7:
-                        ChooseGrazingField.CollectInput(farm, new Sheep());
-                        break;
-                    default:
-                        Console.WriteLine("Invalid option. Redirecting to main menu.");
-                        Thread.Sleep(2000);
-                        break;
+                    switch (Int32.Parse(choice))
+                    {
+                        case 1:
+                            ChooseChickenCoop.CollectInput(farm, new Chicken());
+                            break;
+                        case 2:
+                            ChooseGrazingField.CollectInput(farm, new Cow());
+                            break;
+                        case 3:
+                            ChooseDuckHouse.CollectInput(farm, new Duck());
+                            break;
+                        case 4:
+                            ChooseGrazingField.CollectInput(farm, new Pig());
+                            break;
+                        case 5:
+                            ChooseGrazingField.CollectInput(farm, new Goat());
+                            break;
+                        case 6:
+                            ChooseGrazingField.CollectInput(farm, new Ostrich());
+                            break;
+                        case 7:
+                            ChooseGrazingField.CollectInput(farm, new Sheep());
+                            break;
+                        default:
+                            Console.WriteLine("Invalid option. Please try again.");
+                            Thread.Sleep(2000);
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid option. Please try again.");
+                    Thread.Sleep(2000);
+                    DisplayBanner();
+                    PurchaseLivestock.CollectInput(farm);
                 }
             }
             catch (FormatException)

@@ -48,7 +48,7 @@ namespace Trestlebridge.Actions
                         }
                         catch (ArgumentOutOfRangeException)
                         {
-                            Console.WriteLine("This facility does not exist. Please try again.");
+                            Console.WriteLine("Invalid option. Please try again.");
                             Thread.Sleep(2000);
                             ChooseChickenCoop.CollectInput(farm, new Chicken());
                         }
