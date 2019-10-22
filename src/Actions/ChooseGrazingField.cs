@@ -58,7 +58,7 @@ namespace Trestlebridge.Actions
                         }
                         catch (ArgumentOutOfRangeException)
                         {
-                            Console.WriteLine("This facility does not exist. Please create a new animal and try again.");
+                            Console.WriteLine("Invalid option. Please create a new animal and try again.");
                             Thread.Sleep(2000);
                             DisplayBanner();
                             PurchaseLivestock.CollectInput(farm);
@@ -79,43 +79,6 @@ namespace Trestlebridge.Actions
                     PurchaseLivestock.CollectInput(farm);
                 }
             }
-
-            // if (openFields.Count > 0)
-            // {
-            //     Console.WriteLine($"Place the animal where?");
-            //     Console.Write("> ");
-            //     int choice = Int32.Parse(Console.ReadLine());
-
-            //     if (animal is IGrazing)
-            //     {
-            //         sortedGrazingFields[choice - 1].AddResource(animal);
-            //     }
-            //     else
-            //     {
-            //         Console.WriteLine("Please select another facility");
-            //         for (int i = 0; i < farm.GrazingFields.Count; i++)
-            //         {
-            //             Console.WriteLine("This facility does not exist. Please try again.");
-            //             Thread.Sleep(2000);
-
-            //         }
-            //     }
-            // else
-            // {
-            //     Console.WriteLine("Please select another facility");
-            //     for (int i = 0; i < farm.GrazingFields.Count; i++)
-            //     {
-            //         Console.WriteLine($"{i + 1}. Grazing Field");
-            //     }
-            // }
-            // }
-            // else
-            // {
-            //     Console.WriteLine("There are no matching facilities available. Please create one first.");
-            //     Thread.Sleep(2000);
-            // }
-
-
             /*
                 Couldn't get this to work. Can you?
                 Stretch goal. Only if the app is fully functional.

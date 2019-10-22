@@ -32,21 +32,31 @@ namespace Trestlebridge.Actions
             string choice = Console.ReadLine();
             try
             {
-                switch (Int32.Parse(choice))
+                if (int.Parse(choice) <= 3 && int.Parse(choice) >= 1)
                 {
-                    case 1:
-                        ChoosePlowedField.CollectInput(farm, new Sesame());
-                        break;
-                    case 2:
-                        ChooseSunflowerField<Sunflower>.CollectInput(farm, new Sunflower());
-                        break;
-                    case 3:
-                        ChooseNaturalField.CollectInput(farm, new Wildflower());
-                        break;
-                    default:
-                        Console.WriteLine("Invalid option. Redirecting to main menu.");
-                        Thread.Sleep(2000);
-                        break;
+                    switch (Int32.Parse(choice))
+                    {
+                        case 1:
+                            ChoosePlowedField.CollectInput(farm, new Sesame());
+                            break;
+                        case 2:
+                            ChooseSunflowerField<Sunflower>.CollectInput(farm, new Sunflower());
+                            break;
+                        case 3:
+                            ChooseNaturalField.CollectInput(farm, new Wildflower());
+                            break;
+                        default:
+                            Console.WriteLine("Invalid option. Redirecting to main menu.");
+                            Thread.Sleep(2000);
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid option. Please try again.");
+                    Thread.Sleep(2000);
+                    DisplayBanner();
+                    PurchaseSeed.CollectInput(farm);
                 }
             }
             catch (FormatException)
