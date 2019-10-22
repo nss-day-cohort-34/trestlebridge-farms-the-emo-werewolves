@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Trestlebridge.Models;
 using Trestlebridge.Models.Facilities;
 
@@ -6,6 +7,18 @@ namespace Trestlebridge.Actions
 {
     public class CreateFacility
     {
+        static void DisplayBanner()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine(@"
+        +-++-++-++-++-++-++-++-++-++-++-++-++-+
+        |T||r||e||s||t||l||e||b||r||i||d||g||e|
+        +-++-++-++-++-++-++-++-++-++-++-++-++-+
+                    |F||a||r||m||s|
+                    +-++-++-++-++-+");
+            Console.WriteLine();
+        }
         public static void CollectInput(Farm farm)
         {
             Console.WriteLine("1. Grazing field");
@@ -19,26 +32,37 @@ namespace Trestlebridge.Actions
 
             Console.Write("> ");
             string input = Console.ReadLine();
-
-            switch (Int32.Parse(input))
+            try
             {
-                case 1:
-                    farm.AddGrazingField(new GrazingField());
-                    break;
-                case 2:
-                    farm.AddPlowedField(new PlowedField());
-                    break;
-                case 3:
-                    farm.AddNaturalField(new NaturalField());
-                    break;
-                case 4:
-                    farm.AddChickenCoop(new ChickenCoop());
-                    break;
-                case 5:
-                    farm.AddDuckHouse(new DuckHouse());
-                    break;
-                default:
-                    break;
+                switch (Int32.Parse(input))
+                {
+                    case 1:
+                        farm.AddGrazingField(new GrazingField());
+                        break;
+                    case 2:
+                        farm.AddPlowedField(new PlowedField());
+                        break;
+                    case 3:
+                        farm.AddNaturalField(new NaturalField());
+                        break;
+                    case 4:
+                        farm.AddChickenCoop(new ChickenCoop());
+                        break;
+                    case 5:
+                        farm.AddDuckHouse(new DuckHouse());
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option. Redirecting to main menu.");
+                        Thread.Sleep(2000);
+                        break;
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid option. Please try again.");
+                Thread.Sleep(2000);
+                DisplayBanner();
+                CreateFacility.CollectInput(farm);
             }
         }
     }
