@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Trestlebridge.Models;
 using Trestlebridge.Models.Animals;
@@ -15,15 +16,17 @@ namespace Trestlebridge.Actions
 
             List<DuckHouse> openDuckHouses = new List<DuckHouse>();
 
-            for (int i = 0; i < farm.DuckHouse.Count; i++)
-            {
-                if ((farm.DuckHouse[i].Capacity - 1) >=
-                farm.DuckHouse[i].CurrentStock())
-                {
-                    openDuckHouses.Add(farm.DuckHouse[i]);
-                    Console.WriteLine($"{i + 1}. Duck House (Current Stock: {farm.DuckHouse[i].CurrentStock()})");
+            List<DuckHouse> sortedHouses = farm.DuckHouse.Where(duckHouse => (duckHouse.Capacity - 1) >= duckHouse.CurrentStock()).ToList();
 
-                    farm.DuckHouse[i].ShowAnimalsByType();
+            for (int i = 0; i < sortedHouses.Count; i++)
+            {
+                if ((sortedHouses[i].Capacity - 1) >=
+                sortedHouses[i].CurrentStock())
+                {
+                    openDuckHouses.Add(sortedHouses[i]);
+                    Console.WriteLine($"{i + 1}. Duck House (Current Stock: {sortedHouses[i].CurrentStock()})");
+
+                    sortedHouses[i].ShowAnimalsByType();
                 }
             }
 
@@ -37,10 +40,12 @@ namespace Trestlebridge.Actions
 
                 if (animal is Duck)
                 {
-                    try 
-                    {
-                        farm.DuckHouse[choice - 1].AddResource(animal);
-                    } catch(ArgumentOutOfRangeException)
+                    sortedHouses[choice - 1].AddResource(animal);
+                }
+                else
+                {
+                    Console.WriteLine("Please select another facility");
+                    for (int i = 0; i < farm.DuckHouse.Count; i++)
                     {
                         Console.WriteLine("This facility does not exist. Please try again.");
                         Thread.Sleep(2000);

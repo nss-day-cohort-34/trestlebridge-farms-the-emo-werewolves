@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Trestlebridge.Interfaces;
 using Trestlebridge.Models;
@@ -14,15 +15,17 @@ namespace Trestlebridge.Actions
 
             List<IFacility<IGrazing>> openFields = new List<IFacility<IGrazing>>();
 
-            for (int i = 0; i < farm.GrazingFields.Count; i++)
-            {
-                if ((farm.GrazingFields[i].Capacity - 1) >=
-                farm.GrazingFields[i].CurrentStock())
-                {
-                    openFields.Add(farm.GrazingFields[i]);
-                    Console.WriteLine($"{i + 1}. Grazing Field (Current Stock: {farm.GrazingFields[i].CurrentStock()})");
+            var sortedGrazingFields = farm.GrazingFields.Where(grazingField => (grazingField.Capacity - 1) >= grazingField.CurrentStock()).ToList();
 
-                    farm.GrazingFields[i].ShowAnimalsByType();
+            for (int i = 0; i < sortedGrazingFields.Count; i++)
+            {
+                if ((sortedGrazingFields[i].Capacity - 1) >=
+                sortedGrazingFields[i].CurrentStock())
+                {
+                    openFields.Add(sortedGrazingFields[i]);
+                    Console.WriteLine($"{i + 1}. Grazing Field (Current Stock: {sortedGrazingFields[i].CurrentStock()})");
+
+                    sortedGrazingFields[i].ShowAnimalsByType();
                 }
             }
 
@@ -36,14 +39,16 @@ namespace Trestlebridge.Actions
 
                 if (animal is IGrazing)
                 {
-                    try 
-                    {
-                        sortedGrazingField[choice - 1].AddResource(animal);
-                    } catch(ArgumentOutOfRangeException)
+                    sortedGrazingFields[choice - 1].AddResource(animal);
+                }
+                else
+                {
+                    Console.WriteLine("Please select another facility");
+                    for (int i = 0; i < farm.GrazingFields.Count; i++)
                     {
                         Console.WriteLine("This facility does not exist. Please try again.");
                         Thread.Sleep(2000);
-                        ChooseChickenCoop.CollectInput(farm, new Chicken());
+                        
                     }
                 }
                 // else
