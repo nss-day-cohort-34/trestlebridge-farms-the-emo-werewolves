@@ -17,7 +17,6 @@ namespace Trestlebridge.Actions
             List<ChickenCoop> openChickenCoops = new List<ChickenCoop>();
 
             List<ChickenCoop> sortedCoops = farm.ChickenCoop.Where(coop => (coop.Capacity - 1) >= coop.CurrentStock()).ToList();
-
             for (int i = 0; i < sortedCoops.Count; i++)
             {
                 if ((sortedCoops[i].Capacity - 1) >=

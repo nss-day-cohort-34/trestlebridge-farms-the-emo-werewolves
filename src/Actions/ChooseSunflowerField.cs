@@ -28,7 +28,6 @@ namespace Trestlebridge.Actions
             Dictionary<int, IPlantField> plantFieldDictionary = new Dictionary<int, IPlantField>();
 
             var sortedPlowedFields = farm.PlowedFields.Where(plowedField => (plowedField.Capacity - 1) >= plowedField.CurrentStock()).ToList();
-
             var sortedNaturalFields = farm.NaturalFields.Where(naturalField => (naturalField.Capacity - 1) >= naturalField.CurrentStock()).ToList();
 
             for (int i = 0; i < sortedPlowedFields.Count; i++)

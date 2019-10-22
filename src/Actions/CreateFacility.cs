@@ -34,27 +34,37 @@ namespace Trestlebridge.Actions
             string input = Console.ReadLine();
             try
             {
-                switch (Int32.Parse(input))
+                if (int.Parse(input) <= 5 && int.Parse(input) >= 1)
                 {
-                    case 1:
-                        farm.AddGrazingField(new GrazingField());
-                        break;
-                    case 2:
-                        farm.AddPlowedField(new PlowedField());
-                        break;
-                    case 3:
-                        farm.AddNaturalField(new NaturalField());
-                        break;
-                    case 4:
-                        farm.AddChickenCoop(new ChickenCoop());
-                        break;
-                    case 5:
-                        farm.AddDuckHouse(new DuckHouse());
-                        break;
-                    default:
-                        Console.WriteLine("Invalid option. Redirecting to main menu.");
-                        Thread.Sleep(2000);
-                        break;
+                    switch (Int32.Parse(input))
+                    {
+                        case 1:
+                            farm.AddGrazingField(new GrazingField());
+                            break;
+                        case 2:
+                            farm.AddPlowedField(new PlowedField());
+                            break;
+                        case 3:
+                            farm.AddNaturalField(new NaturalField());
+                            break;
+                        case 4:
+                            farm.AddChickenCoop(new ChickenCoop());
+                            break;
+                        case 5:
+                            farm.AddDuckHouse(new DuckHouse());
+                            break;
+                        default:
+                            Console.WriteLine("Invalid option. Redirecting to main menu.");
+                            Thread.Sleep(2000);
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid option. Please try again.");
+                    Thread.Sleep(2000);
+                    DisplayBanner();
+                    CreateFacility.CollectInput(farm);
                 }
             }
             catch (FormatException)
