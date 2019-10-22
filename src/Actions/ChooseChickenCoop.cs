@@ -39,17 +39,25 @@ namespace Trestlebridge.Actions
 
                 if (animal is Chicken)
                 {
-                    farm.ChickenCoop[choice - 1].AddResource(animal);
-                }
-                else
-                {
-                    // Console.Clear();
-                    Console.WriteLine("Please select another facility");
-                    for (int i = 0; i < farm.ChickenCoop.Count; i++)
+                    try 
                     {
-                        Console.WriteLine($"{i + 1}. Chicken Coop");
+                        farm.ChickenCoop[choice - 1].AddResource(animal);
+                    } catch(ArgumentOutOfRangeException)
+                    {
+                        Console.WriteLine("This facility does not exist. Please try again.");
+                        Thread.Sleep(2000);
+                        ChooseChickenCoop.CollectInput(farm, new Chicken());
                     }
                 }
+                // else
+                // {
+                //     // Console.Clear();
+                //     Console.WriteLine("Please select another facility");
+                //     for (int i = 0; i < farm.ChickenCoop.Count; i++)
+                //     {
+                //         Console.WriteLine($"{i + 1}. Chicken Coop");
+                //     }
+                // }
             }
             else
             {

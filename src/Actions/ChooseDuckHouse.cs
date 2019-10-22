@@ -37,16 +37,24 @@ namespace Trestlebridge.Actions
 
                 if (animal is Duck)
                 {
-                    farm.DuckHouse[choice - 1].AddResource(animal);
-                }
-                else
-                {
-                    Console.WriteLine("Please select another facility");
-                    for (int i = 0; i < farm.DuckHouse.Count; i++)
+                    try 
                     {
-                        Console.WriteLine($"{i + 1}. Duck House");
+                        farm.DuckHouse[choice - 1].AddResource(animal);
+                    } catch(ArgumentOutOfRangeException)
+                    {
+                        Console.WriteLine("This facility does not exist. Please try again.");
+                        Thread.Sleep(2000);
+                        ChooseDuckHouse.CollectInput(farm, new Duck());
                     }
                 }
+                // else
+                // {
+                //     Console.WriteLine("Please select another facility");
+                //     for (int i = 0; i < farm.DuckHouse.Count; i++)
+                //     {
+                //         Console.WriteLine($"{i + 1}. Duck House");
+                //     }
+                // }
             }
             else
             {
