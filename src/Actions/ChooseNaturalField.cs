@@ -9,6 +9,18 @@ namespace Trestlebridge.Actions
 {
     public class ChooseNaturalField
     {
+        static void DisplayBanner ()
+        {
+            Console.Clear();
+            Console.WriteLine();
+            Console.WriteLine(@"
+        +-++-++-++-++-++-++-++-++-++-++-++-++-+
+        |T||r||e||s||t||l||e||b||r||i||d||g||e|
+        +-++-++-++-++-++-++-++-++-++-++-++-++-+
+                    |F||a||r||m||s|
+                    +-++-++-++-++-+");
+            Console.WriteLine();
+        }
         public static void CollectInput(Farm farm, INatural plant)
         {
             Console.Clear();
@@ -31,28 +43,65 @@ namespace Trestlebridge.Actions
 
             Console.WriteLine();
 
-            if (openNaturalFields.Count > 0)
+            if (sortedNaturalFields.Count > 0)
             {
-
                 Console.WriteLine($"Place the plant where?");
-
                 Console.Write("> ");
-                int choice = Int32.Parse(Console.ReadLine());
-
-                if (plant is INatural)
+                try
                 {
-                    sortedNaturalFields[choice - 1].AddResource(plant);
-                }
-                else
-                {
-                    // Console.Clear();
-                    Console.WriteLine("Please select another facility");
-                    for (int i = 0; i < farm.NaturalFields.Count; i++)
+                    int choice = Int32.Parse(Console.ReadLine());
+                    if (plant is INatural)
                     {
-                        Console.WriteLine($"{i + 1}. Natural Field");
+                        try
+                        {
+                            sortedNaturalFields[choice - 1].AddResource(plant);
+                        }
+                        catch (ArgumentOutOfRangeException)
+                        {
+                            Console.WriteLine("This facility does not exist. Please create a new plant and try again.");
+                            Thread.Sleep(2000);
+                            DisplayBanner();
+                            PurchaseSeed.CollectInput(farm);
+                        }
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("There are no matching facilities available. Please create one first.");
+                        Thread.Sleep(2000);
                     }
                 }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid option. Please create a new plant and try again.");
+                    Thread.Sleep(2000);
+                    DisplayBanner();
+                    PurchaseSeed.CollectInput(farm);
+                }
             }
+
+            // if (openNaturalFields.Count > 0)
+            // {
+
+            //     Console.WriteLine($"Place the plant where?");
+
+            //     Console.Write("> ");
+            //     int choice = Int32.Parse(Console.ReadLine());
+
+            //     if (plant is INatural)
+            //     {
+            //         sortedNaturalFields[choice - 1].AddResource(plant);
+            //     }
+            //     else
+            //     {
+            //         // Console.Clear();
+            //         Console.WriteLine("Please select another facility");
+            //         for (int i = 0; i < farm.NaturalFields.Count; i++)
+            //         {
+            //             Console.WriteLine($"{i + 1}. Natural Field");
+            //         }
+            //     }
+            // }
             else
             {
                 Console.WriteLine("There are no matching facilities available. Please create one first.");
